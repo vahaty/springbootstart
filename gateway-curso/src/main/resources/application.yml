@@ -1,0 +1,39 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: gateway
+
+zuul:
+  ignoredServices: '*'
+  prefix: /api
+  routes:
+    sumas:
+      path: /sumas/**
+      serviceId: calculadora
+      strip-prefix: false
+    resultados:
+      path: /resultados-suma/**
+      serviceId: calculadora
+      strip-prefix: false
+    clasificacion:
+      path: /lideres/**
+      serviceId: control
+      strip-prefix: false
+    estadisticas:
+      path: /estadisticas/**
+      serviceId: control
+      strip-prefix: false
+  ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin, Vary
+
+endpoints:
+  routes:
+    sensitive: false
+  trace:
+    sensitive: false
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761/eureka/
